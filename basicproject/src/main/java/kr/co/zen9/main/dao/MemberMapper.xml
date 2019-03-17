@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+/**
+* 작성자 : 송원민
+* 작성일 : 2019.03.18
+* Comment : 회원가입 xml
+/
+ -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.zen9.main.dao.MemberMapper">
+	<insert id="insertMember" parameterType="kr.co.zen9.main.dto.JoinDto">
+		INSERT INTO 
+			login (
+				id
+				, pw
+				, level
+			)
+			VALUES (
+				#{joinId}
+				, #{joinPw}
+				, '사용자'
+			)
+	</insert>
+</mapper>

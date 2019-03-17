@@ -4,28 +4,24 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import kr.co.zen9.main.dto.LoginDto;
+import kr.co.zen9.main.dto.JoinDto;
 
 /**
- * 비동기 방식 로그인 Dao
+ * 회원과 관련된 기능을 구현한 Dao
  * 
  * 작성자 : 송원민
  * 작성일 : 2019.03.18
  */
 @Repository
-public class LoginDao {
+public class MemberDao {
 	
 	@Autowired
 	private SqlSessionTemplate sqlSessionTemplate;
 	
-	private final String nameSpace = "kr.co.zen9.main.dao.LoginMapper.";
+	private final String nameSpace = "kr.co.zen9.main.dao.MemberMapper.";
 	
-	/**
-	 * @param loginDto 
-	 * @return mapper의 정보
-	 */
 	// 사용자 로그인 체크
-	public LoginDto loginCheck(LoginDto loginDto) {
-		return sqlSessionTemplate.selectOne(nameSpace + "loginCheck", loginDto);
+	public void insertMember(JoinDto joinDto) {
+		sqlSessionTemplate.insert(nameSpace + "insertMember", joinDto);
 	}
 }
