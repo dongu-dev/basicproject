@@ -163,7 +163,6 @@ MemberController.java , MemberService.java , MemberDao.java , MemberMapper.xml ,
 	}
 }
 ```
-<img width="800" src="https://user-images.githubusercontent.com/38845736/54513082-929b8380-4999-11e9-98aa-12a2b2133fb1.PNG">
 <br><br>
 (2) Service
 ```
@@ -198,3 +197,6 @@ MemberController.java , MemberService.java , MemberDao.java , MemberMapper.xml ,
 	}
 
 ```
+
+* 암호화 처리
+<img width="800" src="https://user-images.githubusercontent.com/38845736/54513082-929b8380-4999-11e9-98aa-12a2b2133fb1.PNG">
