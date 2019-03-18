@@ -84,7 +84,7 @@ private LoginService loginService;
 	}
 ```
 
-(4) Mapper
+### (4) Mapper ###
 ```
 	<mapper namespace="kr.co.zen9.main.dao.LoginMapper">
 
@@ -100,7 +100,8 @@ private LoginService loginService;
 	</mapper>
 ```
 
-(5) View(ajax 비동기 처리)
+### (5) View(ajax 비동기 처리) ###
+```
 <script type="text/javascript">
 	// 로그인 정보를 Controller로 보냄.
 	$(document).ready(function(){
@@ -128,13 +129,8 @@ private LoginService loginService;
 		})
 	})
 </script>
-
-
-
-
-
-
-
+```
+<br><br><br><br><br><br>
 
 * 회원가입을 하면서 암호화가 처리되는 부분
 
