@@ -10,8 +10,8 @@ LoginController.java , LoginService.java , LoginDao.java, LoginMapper.xml , logi
 ### 회원가입 부분 ###
 MemberController.java , MemberService.java , MemberDao.java , MemberMapper.xml , memberJoin.jsp(회원가입화면)
 
-
 * 회원 로그인 부분
+
 (1) Controller
 ```
 @CrossOrigin
@@ -99,6 +99,40 @@ private LoginService loginService;
 		</select>
 	</mapper>
 ```
+
+(5) View(ajax 비동기 처리)
+<script type="text/javascript">
+	// 로그인 정보를 Controller로 보냄.
+	$(document).ready(function(){
+		console.log(1);
+		$('#btnToLogin').click(function(){
+			var inputId = $('#inputId').val();
+			var inputPw = $('#inputPassword').val();
+			
+			$.ajax({
+				url:'/rest/login'
+				, type:'POST'
+				, data:{id: inputId, pw: inputPw}
+				, success: function(data){
+					if(data == 'success'){
+						location.href='/index';
+					} else{
+						$('#loginHelper').html("아이디 또는 비밀번호가 일치하지 않습니다.");
+					}
+				}
+			})
+		})
+		
+		$('#btnToJoin').click(function(){
+			location.href='/memberJoin';
+		})
+	})
+</script>
+
+
+
+
+
 
 
 
