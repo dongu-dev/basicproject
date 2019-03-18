@@ -217,35 +217,32 @@ MemberController.java , MemberService.java , MemberDao.java , MemberMapper.xml ,
 	</mapper>
 ```
 <br><br>
-(5) View(ajax 비동기 방식)
+(5) View(form 방식을 이용한 동기방식)
 ```
-	<script type="text/javascript">
-		// 로그인 정보를 Controller로 보냄.
-		$(document).ready(function(){
-			console.log(1);
-			$('#btnToLogin').click(function(){
-				var inputId = $('#inputId').val();
-				var inputPw = $('#inputPassword').val();
-				
-				$.ajax({
-					url:'/rest/login'
-					, type:'POST'
-					, data:{id: inputId, pw: inputPw}
-					, success: function(data){
-						if(data == 'success'){
-							location.href='/index';
-						} else{
-							$('#loginHelper').html("아이디 또는 비밀번호가 일치하지 않습니다.");
-						}
-					}
-				})
-			})
+	<form class="form-horizontal" action="/Join" method="post">
+		<fieldset>
+		
+		<!-- Form Name -->
+		<legend>회원가입 페이지</legend>
 			
-			$('#btnToJoin').click(function(){
-				location.href='/memberJoin';
-			})
-		})
-	</script>
+		<!-- Text input-->
+		<div class="form-group">
+			<label class="col-md-4 control-label" for="memberID">아이디</label>  
+			<div class="col-md-1">
+				<input id="memberID" name="joinId" type="text" placeholder="ID" class="form-control input-md">    
+			</div>
+		</div>
+				
+		<!-- Text input-->
+		<div class="form-group">
+			<label class="col-md-4 control-label" for="first_name">비밀번호</label>  
+			<div class="col-md-4">
+				<input id="password" name="joinPw" type="text" placeholder="password" class="form-control input-md">
+			</div>
+		</div>
+		<input type="submit" class="btn btn-success" value="가입">
+		</fieldset>
+	</form>
 ```
 
 * 암호화 처리
