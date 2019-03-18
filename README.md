@@ -11,8 +11,9 @@ LoginController.java , LoginService.java , LoginDao.java, LoginMapper.xml , logi
 MemberController.java , MemberService.java , MemberDao.java , MemberMapper.xml , memberJoin.jsp(회원가입화면)
 
 * 로그인을 하면서 암호화가 처리되는 부분
-'''
-@RequestMapping(value="/Join", method=RequestMethod.POST)
+
+```
+	@RequestMapping(value="/Join", method=RequestMethod.POST)
 	public String addMember(JoinDto joinDto) {
 		String inputPass = joinDto.getJoinPw();
 		String Pass = passEncoder.encode(inputPass);
@@ -20,4 +21,4 @@ MemberController.java , MemberService.java , MemberDao.java , MemberMapper.xml ,
 		memberService.addMember(joinDto);
 		return "redirect:/";
 	}
-'''
+```
