@@ -12,13 +12,19 @@ MemberController.java , MemberService.java , MemberDao.java , MemberMapper.xml ,
 
 * 로그인을 하면서 암호화가 처리되는 부분
 
-```
+```	
+	@Autowired
+	BCryptPasswordEncoder passEncoder;
+	
 	@RequestMapping(value="/Join", method=RequestMethod.POST)
 	public String addMember(JoinDto joinDto) {
 		String inputPass = joinDto.getJoinPw();
-		String Pass = passEncoder.encode(inputPass);
+		String Pass = passEncoder.encode(inputPass); <-- 단방향 암호화 인코드
 		joinDto.setJoinPw(Pass);
 		memberService.addMember(joinDto);
 		return "redirect:/";
 	}
 ```
+
+
+###  ###
