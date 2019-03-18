@@ -10,7 +10,99 @@ LoginController.java , LoginService.java , LoginDao.java, LoginMapper.xml , logi
 ### 회원가입 부분 ###
 MemberController.java , MemberService.java , MemberDao.java , MemberMapper.xml , memberJoin.jsp(회원가입화면)
 
-* 로그인을 하면서 암호화가 처리되는 부분
+
+* 회원 로그인 부분
+(1) Controller
+```
+@CrossOrigin
+@RestController
+public class LoginController {
+
+@Autowired
+private LoginService loginService;
+
+	/**
+	 * @param loginDto,session 
+	 * @return 권한 레벨의 null 여부
+	 */
+	@RequestMapping(value="/rest/login", method = RequestMethod.POST)
+	public String login(LoginDto loginDto, HttpSession session) {
+		System.out.println("loginRestController - loginCheck() 호출");
+		LoginDto Level = loginService.LoginCheck(loginDto);
+		
+		if(Level != null) {
+			session.setAttribute("Id", Level.getId());
+			session.setAttribute("Level", Level.getLevel());
+			
+			return "success";
+		}
+		return "fail";
+	}
+}
+```
+
+(2) Service
+```
+	@Service
+	@Transactional
+	public class LoginService {
+	
+	
+	@Autowired
+	private LoginDao loginDao;
+	
+	/**
+	 * @param loginDto 
+	 * @return 권한 레벨 : 관리자
+	 */
+	public LoginDto LoginCheck(LoginDto loginDto) {
+		System.out.println("userService - input id : " + loginDto.getId() + ", input pw : " + loginDto.getPw());
+		LoginDto level = loginDao.loginCheck(loginDto);
+		return level;
+	}
+}
+```
+
+(3) Dao
+```
+	@Repository
+	public class LoginDao {
+
+		@Autowired
+		private SqlSessionTemplate sqlSessionTemplate;
+
+		private final String nameSpace = "kr.co.zen9.main.dao.LoginMapper.";
+
+		/**
+		 * @param loginDto 
+		 * @return mapper의 정보
+		 */
+		// 사용자 로그인 체크
+		public LoginDto loginCheck(LoginDto loginDto) {
+			return sqlSessionTemplate.selectOne(nameSpace + "loginCheck", loginDto);
+		}
+	}
+```
+
+(4) Mapper
+```
+	<mapper namespace="kr.co.zen9.main.dao.LoginMapper">
+
+		<!-- 로그인 체크 쿼리 -->
+		<select id="loginCheck" parameterType="kr.co.zen9.main.dto.LoginDto" resultType="kr.co.zen9.main.dto.LoginDto">
+			SELECT 
+				id
+				, level
+			FROM 
+				login
+			WHERE id=#{id} AND pw=#{pw}
+		</select>
+	</mapper>
+```
+
+
+
+* 회원가입을 하면서 암호화가 처리되는 부분
 
 ```	
 	@Autowired
@@ -30,13 +122,3 @@ PasswordEncoder는 사용자가 등록한 비밀번호를 단방향으로 변환
 <div>
 <img width="800" src="https://user-images.githubusercontent.com/38845736/54513082-929b8380-4999-11e9-98aa-12a2b2133fb1.PNG">
 </div>
-
-
-
-* 회원 로그인 부분
-
-
-
-
-
-
