@@ -174,13 +174,13 @@ PasswordEncoder는 사용자가 등록한 비밀번호를 단방향으로 변환
 	@Transactional
 	public class MemberService {
 	
-	@Autowired
-	MemberDao memberDao;
-	
-	public void addMember(JoinDto joinDto) {
-		memberDao.insertMember(joinDto);
+		@Autowired
+		MemberDao memberDao;
+
+		public void addMember(JoinDto joinDto) {
+			memberDao.insertMember(joinDto);
+		}
 	}
-}
 ```
 <br><br>
 (3) Dao
@@ -188,35 +188,35 @@ PasswordEncoder는 사용자가 등록한 비밀번호를 단방향으로 변환
 	@Repository
 	public class MemberDao {
 	
-	@Autowired
-	private SqlSessionTemplate sqlSessionTemplate;
-	
-	private final String nameSpace = "kr.co.zen9.main.dao.MemberMapper.";
-	
-	// 사용자 로그인 체크
-	public void insertMember(JoinDto joinDto) {
-		sqlSessionTemplate.insert(nameSpace + "insertMember", joinDto);
+		@Autowired
+		private SqlSessionTemplate sqlSessionTemplate;
+
+		private final String nameSpace = "kr.co.zen9.main.dao.MemberMapper.";
+
+		// 사용자 로그인 체크
+		public void insertMember(JoinDto joinDto) {
+			sqlSessionTemplate.insert(nameSpace + "insertMember", joinDto);
+		}
 	}
-}
 ```
 <br><br>
 (4) Mapper
 ```
-<mapper namespace="kr.co.zen9.main.dao.MemberMapper">
-	<insert id="insertMember" parameterType="kr.co.zen9.main.dto.JoinDto">
-		INSERT INTO 
-			login (
-				id
-				, pw
-				, level
-			)
-			VALUES (
-				#{joinId}
-				, #{joinPw}
-				, '사용자'
-			)
-	</insert>
-</mapper>
+	<mapper namespace="kr.co.zen9.main.dao.MemberMapper">
+		<insert id="insertMember" parameterType="kr.co.zen9.main.dto.JoinDto">
+			INSERT INTO 
+				login (
+					id
+					, pw
+					, level
+				)
+				VALUES (
+					#{joinId}
+					, #{joinPw}
+					, '사용자'
+				)
+		</insert>
+	</mapper>
 ```
 <br><br>
 (5) View
