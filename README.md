@@ -1,5 +1,5 @@
 # 프로젝트 개요 #
-form 방식으로 로그인 처리를 했던 부분을 비동기방식으로 처리를 하였고 스프링 시큐리티를 사용해 비밀번호 암호화를 적용해 보았다.
+form 방식으로 로그인 처리를 했던 부분을 비동기방식으로 처리를 하였고 form 방식을 사용해 회원가입과 스프링 시큐리티를 사용해 회원 비밀번호 암호화를 적용해 보았다.
 
 # 프로젝트 구조 #
 최초 설정 패키지 명 : kr.co.zen9.main
@@ -131,21 +131,118 @@ private LoginService loginService;
 ### 회원가입 부분 ###
 MemberController.java , MemberService.java , MemberDao.java , MemberMapper.xml , memberJoin.jsp(회원가입화면)
 
+(1) Controller
 ```	
+	@Controller
+	public class MemberController {
+	
+	@Autowired
+	MemberService memberService;
+	
 	@Autowired
 	BCryptPasswordEncoder passEncoder;
 	
+	@RequestMapping(value="/memberJoin", method=RequestMethod.GET)
+	public String memberJoin() {
+		return "memberJoin";
+	}
+	
+	/**
+	 * 회원가입시 암호화 로그인
+	 * 
+	 * 메소드명 : addMember
+	 * 리턴값 : 처음화면
+	 */
 	@RequestMapping(value="/Join", method=RequestMethod.POST)
 	public String addMember(JoinDto joinDto) {
 		String inputPass = joinDto.getJoinPw();
-		String Pass = passEncoder.encode(inputPass); <-- 단방향 암호화 인코드(데이터베이스에 저장된 암호는 복호화 불가)
+		String Pass = passEncoder.encode(inputPass);
 		joinDto.setJoinPw(Pass);
 		memberService.addMember(joinDto);
 		return "redirect:/";
 	}
+}
 ```
-
 PasswordEncoder는 사용자가 등록한 비밀번호를 단방향으로 변환하여 저장하는 용도로 사용됨.
 <div>
 <img width="800" src="https://user-images.githubusercontent.com/38845736/54513082-929b8380-4999-11e9-98aa-12a2b2133fb1.PNG">
 </div>
+<br><br>
+(2) Service
+```
+	@Service
+	@Transactional
+	public class MemberService {
+	
+	@Autowired
+	MemberDao memberDao;
+	
+	public void addMember(JoinDto joinDto) {
+		memberDao.insertMember(joinDto);
+	}
+}
+```
+<br><br>
+(3) Dao
+```
+	@Repository
+	public class MemberDao {
+	
+	@Autowired
+	private SqlSessionTemplate sqlSessionTemplate;
+	
+	private final String nameSpace = "kr.co.zen9.main.dao.MemberMapper.";
+	
+	// 사용자 로그인 체크
+	public void insertMember(JoinDto joinDto) {
+		sqlSessionTemplate.insert(nameSpace + "insertMember", joinDto);
+	}
+}
+```
+<br><br>
+(4) Mapper
+<mapper namespace="kr.co.zen9.main.dao.MemberMapper">
+	<insert id="insertMember" parameterType="kr.co.zen9.main.dto.JoinDto">
+		INSERT INTO 
+			login (
+				id
+				, pw
+				, level
+			)
+			VALUES (
+				#{joinId}
+				, #{joinPw}
+				, '사용자'
+			)
+	</insert>
+</mapper>
+<br><br>
+(5) View
+```
+	<form class="form-horizontal" action="/Join" method="post">
+		<fieldset>
+
+		<!-- Form Name -->
+		<legend>회원가입 페이지</legend>
+
+		<!-- Text input-->
+		<div class="form-group">
+			<label class="col-md-4 control-label" for="memberID">아이디</label>  
+			<div class="col-md-1">
+				<input id="memberID" name="joinId" type="text" placeholder="ID" class="form-control input-md">    
+			</div>
+		</div>
+
+		<!-- Text input-->
+		<div class="form-group">
+			<label class="col-md-4 control-label" for="first_name">비밀번호</label>  
+			<div class="col-md-4">
+				<input id="password" name="joinPw" type="text" placeholder="password" class="form-control input-md">
+			</div>
+		</div>
+		<input type="submit" class="btn btn-success" value="가입">
+		</fieldset>
+	</form>
+```
+
+
