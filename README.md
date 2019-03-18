@@ -44,19 +44,19 @@ private LoginService loginService;
 	public class LoginService {
 	
 	
-	@Autowired
-	private LoginDao loginDao;
-	
-	/**
-	 * @param loginDto 
-	 * @return 권한 레벨 : 관리자
-	 */
-	public LoginDto LoginCheck(LoginDto loginDto) {
-		System.out.println("userService - input id : " + loginDto.getId() + ", input pw : " + loginDto.getPw());
-		LoginDto level = loginDao.loginCheck(loginDto);
-		return level;
+		@Autowired
+		private LoginDao loginDao;
+
+		/**
+		 * @param loginDto 
+		 * @return 권한 레벨 : 관리자
+		 */
+		public LoginDto LoginCheck(LoginDto loginDto) {
+			System.out.println("userService - input id : " + loginDto.getId() + ", input pw : " + loginDto.getPw());
+			LoginDto level = loginDao.loginCheck(loginDto);
+			return level;
+		}
 	}
-}
 ```
 <br><br>
 (3) Dao
@@ -181,6 +181,7 @@ PasswordEncoder는 사용자가 등록한 비밀번호를 단방향으로 변환
 			memberDao.insertMember(joinDto);
 		}
 	}
+
 ```
 <br><br>
 (3) Dao
@@ -198,51 +199,5 @@ PasswordEncoder는 사용자가 등록한 비밀번호를 단방향으로 변환
 			sqlSessionTemplate.insert(nameSpace + "insertMember", joinDto);
 		}
 	}
-```
-<br><br>
-(4) Mapper
-```
-	<mapper namespace="kr.co.zen9.main.dao.MemberMapper">
-		<insert id="insertMember" parameterType="kr.co.zen9.main.dto.JoinDto">
-			INSERT INTO 
-				login (
-					id
-					, pw
-					, level
-				)
-				VALUES (
-					#{joinId}
-					, #{joinPw}
-					, '사용자'
-				)
-		</insert>
-	</mapper>
-```
-<br><br>
-(5) View
-```
-	<form class="form-horizontal" action="/Join" method="post">
-		<fieldset>
 
-		<!-- Form Name -->
-		<legend>회원가입 페이지</legend>
-
-		<!-- Text input-->
-		<div class="form-group">
-			<label class="col-md-4 control-label" for="memberID">아이디</label>  
-			<div class="col-md-1">
-				<input id="memberID" name="joinId" type="text" placeholder="ID" class="form-control input-md">    
-			</div>
-		</div>
-
-		<!-- Text input-->
-		<div class="form-group">
-			<label class="col-md-4 control-label" for="first_name">비밀번호</label>  
-			<div class="col-md-4">
-				<input id="password" name="joinPw" type="text" placeholder="password" class="form-control input-md">
-			</div>
-		</div>
-		<input type="submit" class="btn btn-success" value="가입">
-		</fieldset>
-	</form>
 ```
