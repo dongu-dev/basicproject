@@ -1,5 +1,5 @@
 # 프로젝트 개요 #
-기존 로그인 했던 비밀번호를 그대로 데이터베이스에 저장 했던 방식을 스프링 시큐리티를 사용해 비밀번호 암호화를 적용해 보았다.
+form 방식으로 로그인 처리를 했던 부분을 비동기방식으로 처리를 하였고 스프링 시큐리티를 사용해 비밀번호 암호화를 적용해 보았다.
 
 # 프로젝트 구조 #
 최초 설정 패키지 명 : kr.co.zen9.main
@@ -19,12 +19,21 @@ MemberController.java , MemberService.java , MemberDao.java , MemberMapper.xml ,
 	@RequestMapping(value="/Join", method=RequestMethod.POST)
 	public String addMember(JoinDto joinDto) {
 		String inputPass = joinDto.getJoinPw();
-		String Pass = passEncoder.encode(inputPass); <-- 단방향 암호화 인코드
+		String Pass = passEncoder.encode(inputPass); <-- 단방향 암호화 인코드(데이터베이스에 저장된 암호는 복호화 불가)
 		joinDto.setJoinPw(Pass);
 		memberService.addMember(joinDto);
 		return "redirect:/";
 	}
 ```
 
+PasswordEncoder는 사용자가 등록한 비밀번호를 단방향으로 변환하여 저장하는 용도로 사용됨.
 
-###  ###
+
+
+* 회원 로그인 부분
+
+
+
+
+
+
