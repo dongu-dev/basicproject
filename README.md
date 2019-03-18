@@ -7,8 +7,6 @@ form 방식으로 로그인 처리를 했던 부분을 비동기방식으로 처
 ### 로그인 부분 ###
 LoginController.java , LoginService.java , LoginDao.java, LoginMapper.xml , login.jsp(로그인화면)
 
-### 회원가입 부분 ###
-MemberController.java , MemberService.java , MemberDao.java , MemberMapper.xml , memberJoin.jsp(회원가입화면)
 
 * 회원 로그인 부분
 
@@ -40,7 +38,7 @@ private LoginService loginService;
 	}
 }
 ```
-
+<br><br>
 (2) Service
 ```
 	@Service
@@ -62,7 +60,7 @@ private LoginService loginService;
 	}
 }
 ```
-
+<br><br>
 (3) Dao
 ```
 	@Repository
@@ -83,8 +81,8 @@ private LoginService loginService;
 		}
 	}
 ```
-
-### (4) Mapper ###
+<br><br>
+(4) Mapper
 ```
 	<mapper namespace="kr.co.zen9.main.dao.LoginMapper">
 
@@ -99,8 +97,8 @@ private LoginService loginService;
 		</select>
 	</mapper>
 ```
-
-### (5) View(ajax 비동기 처리) ###
+<br><br>
+(5) View(ajax 비동기 처리)
 ```
 <script type="text/javascript">
 	// 로그인 정보를 Controller로 보냄.
@@ -132,7 +130,8 @@ private LoginService loginService;
 ```
 <br><br><br><br><br><br>
 
-* 회원가입을 하면서 암호화가 처리되는 부분
+### 회원가입 부분 ###
+MemberController.java , MemberService.java , MemberDao.java , MemberMapper.xml , memberJoin.jsp(회원가입화면)
 
 ```	
 	@Autowired
