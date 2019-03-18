@@ -156,7 +156,7 @@ MemberController.java , MemberService.java , MemberDao.java , MemberMapper.xml ,
 	@RequestMapping(value="/Join", method=RequestMethod.POST)
 	public String addMember(JoinDto joinDto) {
 		String inputPass = joinDto.getJoinPw();
-		String Pass = passEncoder.encode(inputPass);
+		String Pass = passEncoder.encode(inputPass); <-- 단방향 암호화 처리(데이터베이스에서 암호화된 데이터 복호화 불가)
 		joinDto.setJoinPw(Pass);
 		memberService.addMember(joinDto);
 		return "redirect:/";
