@@ -201,6 +201,7 @@ PasswordEncoder는 사용자가 등록한 비밀번호를 단방향으로 변환
 ```
 <br><br>
 (4) Mapper
+```
 <mapper namespace="kr.co.zen9.main.dao.MemberMapper">
 	<insert id="insertMember" parameterType="kr.co.zen9.main.dto.JoinDto">
 		INSERT INTO 
@@ -216,6 +217,7 @@ PasswordEncoder는 사용자가 등록한 비밀번호를 단방향으로 변환
 			)
 	</insert>
 </mapper>
+```
 <br><br>
 (5) View
 ```
@@ -244,5 +246,3 @@ PasswordEncoder는 사용자가 등록한 비밀번호를 단방향으로 변환
 		</fieldset>
 	</form>
 ```
-
-
