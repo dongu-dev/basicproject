@@ -197,6 +197,56 @@ MemberController.java , MemberService.java , MemberDao.java , MemberMapper.xml ,
 	}
 
 ```
+<br><br>
+(4) Mapper
+```
+	<mapper namespace="kr.co.zen9.main.dao.MemberMapper">
+		<insert id="insertMember" parameterType="kr.co.zen9.main.dto.JoinDto">
+			INSERT INTO 
+				login (
+					id
+					, pw
+					, level
+				)
+				VALUES (
+					#{joinId}
+					, #{joinPw}
+					, '사용자'
+				)
+		</insert>
+	</mapper>
+```
+<br><br>
+(5) View(ajax 비동기 방식)
+```
+	<script type="text/javascript">
+		// 로그인 정보를 Controller로 보냄.
+		$(document).ready(function(){
+			console.log(1);
+			$('#btnToLogin').click(function(){
+				var inputId = $('#inputId').val();
+				var inputPw = $('#inputPassword').val();
+				
+				$.ajax({
+					url:'/rest/login'
+					, type:'POST'
+					, data:{id: inputId, pw: inputPw}
+					, success: function(data){
+						if(data == 'success'){
+							location.href='/index';
+						} else{
+							$('#loginHelper').html("아이디 또는 비밀번호가 일치하지 않습니다.");
+						}
+					}
+				})
+			})
+			
+			$('#btnToJoin').click(function(){
+				location.href='/memberJoin';
+			})
+		})
+	</script>
+```
 
 * 암호화 처리
 <img width="800" src="https://user-images.githubusercontent.com/38845736/54513082-929b8380-4999-11e9-98aa-12a2b2133fb1.PNG">
