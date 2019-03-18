@@ -28,7 +28,7 @@ MemberController.java , MemberService.java , MemberDao.java , MemberMapper.xml ,
 
 PasswordEncoder는 사용자가 등록한 비밀번호를 단방향으로 변환하여 저장하는 용도로 사용됨.
 <div>
-<img width="1200" height="600" src="https://user-images.githubusercontent.com/38845736/54513082-929b8380-4999-11e9-98aa-12a2b2133fb1.PNG">
+<img width="800" height="200" src="https://user-images.githubusercontent.com/38845736/54513082-929b8380-4999-11e9-98aa-12a2b2133fb1.PNG">
 </div>
 
 
