@@ -8,8 +8,6 @@ form 방식으로 로그인 처리를 했던 부분을 비동기방식으로 처
 LoginController.java , LoginService.java , LoginDao.java, LoginMapper.xml , login.jsp(로그인화면)
 
 
-* 회원 로그인 부분
-
 (1) Controller
 ```
 @CrossOrigin
